@@ -1,0 +1,57 @@
+Name = "My Rule"
+Triggers = ["do_stuff"]
+
+[[conditions]]
+code = '''
+
+name, err = rule.Globals().R("name")
+if err != nil {
+    return false, err
+}
+if name != "" {
+    // true, no error
+    return true, nil
+}else {
+    // false, engine must check error
+    return false, nil
+}
+
+'''
+
+
+[[effects]]
+code = '''
+
+name, _ = rule.Globals().R("name")
+message = format("Hello, %s!", name)
+rule.Globals().W("message", message)
+
+return nil //no error
+
+'''
+
+[[effects]]
+code = '''
+
+m, err = rule.Globals().R("message")
+if err != nil {
+    return err
+}
+
+rule.Globals().W("message", format("%s (another effect)", m))
+
+return nil
+
+'''
+
+[[effects]]
+code = '''
+m, _ = rule.Globals().R("message")
+
+new_message = format("%s [para Dante]", m)
+
+rule.Globals().W("message", new_message)
+
+return nil
+
+'''

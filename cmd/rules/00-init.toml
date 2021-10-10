@@ -1,0 +1,11 @@
+Name = "init rule"
+Triggers = ["init", "start"]
+
+
+[[effects]]
+code = '''
+
+rule.Globals().W("name","Diego")
+
+return nil
+'''

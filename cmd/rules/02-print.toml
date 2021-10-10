@@ -1,0 +1,22 @@
+Name = "Print rule"
+Triggers = ["do_stuff"]
+
+[[conditions]]
+code = '''
+
+_, err = rule.Globals().R("message")
+if err != nil {
+    return false, err
+}
+return true, nil
+
+'''
+
+[[effects]]
+code = '''
+
+m, _ = rule.Globals().R("message")
+print(m)
+
+return nil
+'''
